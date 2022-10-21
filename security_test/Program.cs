@@ -42,10 +42,13 @@ while (true)
                 Console.WriteLine("Files protected in real time.");
                 List<FileSystemWatcher> watchers = new();
                 List<FileStream> openedStreams = new();
+                //Запуск функции защиты файлов
                 FileProtector.WatchFromDirectory(templates, ref watchers, ref openedStreams);
 
                 Console.WriteLine("Press password to leave security mode.");
+                //Для отключения необходимо ввести пароль
                 while (!TemplateIO.ReadAccess()) Console.WriteLine("Wrong password. Try again.");
+                //После успешного ввода чистим все занятые защитой ресурсы
                 FileProtector.Clean(ref watchers, ref openedStreams);
                 watchers.Clear();
                 openedStreams.Clear();
